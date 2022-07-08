@@ -1,0 +1,34 @@
+version: '3.0'
+services:
+  mysql:
+    restart: always
+    image: mysql:5.7.37
+    container_name: mysql_test
+    volumes:
+      - ./logs:/var/log/mysql
+      - ./data:/var/lib/mysql
+      - ./etc:/etc/mysql/conf.d
+      # - ./init:/docker-entrypoint-initdb.d/
+      # 数据库还原目录 可将需要还原的sql文件放在这里
+      - ./source:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'test'
+      TZ: 'Asia/Shanghai'
+      MYSQL_USER: 'admin'
+      MYSQL_PASS: '123456'
+    ports:
+      - 33060:3306
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+      --sql-mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+    networks:
+      - zbx_agent
+
+networks:
+  zbx_agent:
+    name: zabbix-agent_zbx_agent

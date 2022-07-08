@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    volumes:
+      - ./jenkins/jenkins:/var/jenkins_home
+ #     - ./jenkins/docker.sock:/var/run/docker.sock
+ #     - ./jenkins/docker:/usr/bin/docker
+      - ./jenkins/sysconfig/:/etc/sysconfig/
+      - ./jenkins/lib:/usr/lib/x86_64-linux-gnu/libltdl.so.7
+    ports:
+      - "8081:8080"
+    expose:
+      - "8081"
+    privileged: true
+    user: root
+    restart: always
+    container_name: jenkins
+    environment:
+      JAVA_OPTS: '-Djava.util.logging.config.file=/var/jenkins_home/log.properties'

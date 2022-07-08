@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mysql:8.0.29
+    container_name: mysql
+    # network_mode: hosts
+    command:
+    # MySQL8的密码验证方式默认是 caching_sha2_password，但是很多的连接工具还不支持该方式
+    # 就需要手动设置下mysql的密码认证方式为以前的 mysql_native_password 方式
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower-case-table-names=1 # 设置表名大小写不敏感
+    # docker的重启策略：在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器
+    restart: unless-stopped
+    environment:
+      # 时区上海
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: Nhy6%tgb # root用户的密码
+      MYSQL_USER: zb # 创建新用户
+      MYSQL_PASSWORD: zb2014 # 新用户的密码
+    ports:
+      - 3306:3306
+      - 3307:6555
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./conf/my.cnf:/etc/mysql/my.cnf
+      - ./conf.d:/etc/mysql/conf.d
+      # - ./logs:/logs
+      # - ./init/:/docker-entrypoint-initdb.d/
