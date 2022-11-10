@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  consul-server:
+    container_name: consul
+    image: consul:1.13.3
+    networks:
+      - consul_network
+    volumes:
+      - ./data:/consul/data
+      - ./config:/consul/config
+    ports:
+      - 8500:8500
+    command: ["consul","agent","-server","-bootstrap","-data-dir","/consul","-config-dir","/consul/config","-ui","-bind","127.0.0.1","-client","0.0.0.0"]
+  # consul-client:
+  #   container_name: consul
+  #   image: consul:1.13.3
+  #   networks:
+  #     - consul_network
+  #   volumes:
+  #     - ./data:/consul/data
+  #     - ./config:/consul/config
+  #   ports:
+  #     - 8500:8500
+  #   command: ["consul","agent","-client","-data-dir","/consul","-ui","-bind","127.0.0.1","-client","0.0.0.0"]
+
+networks:
+ consul_network:
+  external: true

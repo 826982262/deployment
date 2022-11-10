@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  # 缓存服务
+  redis:
+    image: daocloud.io/library/redis
+    container_name: redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf

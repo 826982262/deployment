@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  openresty:
+    image: bitnami/openresty:1.21.4-1-debian-11-r55
+    restart: always
+    volumes:
+      - ./logs:/usr/local/openresty/nginx/logs
+      - ./conf.d/:/etc/nginx/conf.d
+    ports:
+      - "8080:80"

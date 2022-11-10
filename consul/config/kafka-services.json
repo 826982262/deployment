@@ -1,0 +1,19 @@
+      
+      {
+        "service": {
+          "name": "kafka1",
+          "address": "106.13.216.62",
+          "port": 9092,
+          "tagged_addresses": {
+            "lan": {
+              "address": "106.13.216.62",
+              "port": 9092
+            },
+            "lan_ipv4": {
+              "address": "106.13.216.62",
+              "port": 9092
+            }
+          }
+        }
+      }
+      
